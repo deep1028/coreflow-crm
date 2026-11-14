@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreFlow CRM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+</head>
+
+<body>
+    <section class="sidebar-dashboard">
+        <aside>
+            <div class="logo">
+                CoreFlow CRM
+            </div>
+
+            <div class="tabs">
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="clients.html">Clients</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="meetings.html">Meetings</a></li>
+                        <li><a href="tasks.html">Tasks</a></li>
+                        <li><a href="staff.html">Staff</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <p>Version 0.1</p>
+        </aside>
+
+        <main>
+
+            <header>
+                <h1>Dashboard</h1>
+                <p>Welcome back, Deep!</p>
+            </header>
+
+            <!-- <div class="welcome-search">
+                <p>Welcome back, Deep!</p>
+                <input type="text" placeholder="search clients......">
+            </div> -->
+
+            <div class="user-actions">
+                <input type="text" id="client-search" placeholder="Search clients...">
+                <div class="user-actions-btns">
+                    <button>Notifications</button>
+                    <button>Profile</button>
+                    <button class="add-client" id="new-client-btn"><i class="fa-solid fa-plus"></i>New Client</button>
+                </div>
+            </div>
+            <section class="stat-cards">
+                <div class="stat-card">
+                    <div class="stat-heading">
+                        <i class="fa-solid fa-people-group"></i>
+                        <h3>Total clients</h3>
+                    </div>
+                    <p class="stat-number">26</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-heading">
+                        <i class="fa-solid fa-folder"></i>
+                        <h3>Active Projects</h3>
+                    </div>
+                    <p class="stat-number">8</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-heading">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <h3>Meetings Today</h3>
+                    </div>
+                    <p class="stat-number">3</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-heading">
+                        <i class="fa-solid fa-tasks"></i>
+                        <h3>Pending Tasks</h3>
+                    </div>
+                    <p class="stat-number">14</p>
+                </div>
+            </section>
+
+            <section class="recent-clients">
+                <header>
+                    <h2>Recent Clients</h2>
+                </header>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th>Next Meeting</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="client-table-body">
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="upcoming-meetings">
+                <div class="upcoming-meetings-heading">
+                    <h2>Upcoming Meetings</h2>
+                </div>
+
+                <div class="upcoming-meeting-cards">
+                    <div class="meeting-card">
+                        <p>Time: <span class="content-meeting-card">10:00 AM</span></p>
+                        <p>Client: <span class="content-meeting-card">Rahul Patel</span></p>
+                        <p>Purpose: <span class="content-meeting-card">Website Discussion</span></p>
+                        <p>Date: <span class="content-meeting-card">Tomorrow</span></p>
+                    </div>
+                    <div class="meeting-card">
+                        <p>Time: <span class="content-meeting-card">2:30 PM</span></p>
+                        <p>Client: <span class="content-meeting-card">Glow Salon</span></p>
+                        <p>Purpose: <span class="content-meeting-card">Proposal Review</span></p>
+                        <p>Date: <span class="content-meeting-card">Friday</span></p>
+                    </div>
+                    <div class="meeting-card">
+                        <p>Time: <span class="content-meeting-card">5:00 PM</span></p>
+                        <p>Client: <span class="content-meeting-card">FitZone Gym</span></p>
+                        <p>Purpose: <span class="content-meeting-card">Project Handover</span></p>
+                        <p>Date: <span class="content-meeting-card">Saturday</span></p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+
+    </section>
+
+    <section class="new-client-form" id="new-client-form-section">
+        <header>
+            <h2>Add New Client</h2>
+            <p>Fill out Client information</p>
+        </header>
+
+        <form action="" id="new-client-form">
+            <label for="client-name">Client Name<span style="color: red; font-size: 22px;">*</span></label>
+            <input type="text" name="client-name" id="client-name" required>
+
+            <label for="client-email">Client Email<span style="color: red; font-size: 22px;">*</span></label>
+            <input type="email" name="client-email" id="client-email" required>
+
+            <label for="client-phone">Client Phone<span style="color: red; font-size: 22px;">*</span></label>
+            <input type="text" name="client-phone" id="client-phone" required>
+
+            <label for="client-company-name">Company Name<span style="color: red; font-size: 22px;">*</span></label>
+            <input type="text" name="client-company-name" id="client-company-name" required>
+
+            <div class="client-update">
+                <button type="button" class="cancel-client" id="cancel-client-btn">Cancel</button>
+                <button class="save-client" id="save-client-btn">Save Client</button>
+            </div>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
