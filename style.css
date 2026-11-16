@@ -353,3 +353,121 @@ main header p{
 .delete-client-btn-table:hover{
     background: rgb(209, 110, 110);
 }
+
+.toast-container{
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   z-index: 1000;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   width: 320px;
+}
+
+.toast{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px;
+    background-color: #181C24;
+    border: 1px solid #343b49;
+    border-radius: 8px;
+    color: #FFFFFF;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast-show{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-hide{
+    opacity: 0;
+    transform: translateX(30px);
+}
+
+.toast-success{
+    border-left: 4px solid #10B981;
+}
+
+.toast-error{
+    border-left: 4px solid #EF4444;
+}
+
+.toast-warning{
+    border-left: 4px solid #F59E0B;
+}
+
+.toast-info{
+    border-left: 4px solid #3b82f6;
+}
+
+.toast-message{
+    flex: 1;
+    font-size: 14px;
+}
+
+.toast-close{
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.confirm-dialog{
+    width: 400px;
+    max-width: calc(100% - 32px);
+    margin: auto;
+    padding: 24px;
+    background-color: #181c24;
+    color: #FFFFFF;
+    border: 1px solid #343b49;
+    border-radius: 12px;
+}
+
+.confirm-dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.confirm-dialog-content h2{
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.confirm-dialog-content p{
+    color: #9ca3af;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.confirm-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.confirm-actions button{
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+
+#confirm-cancel{
+    background-color: #343b49;
+}
+
+#confirm-accept{
+    background-color: #10b981;
+}
+
+#confirm-accept:hover{
+    background-color: #059669;
+}
