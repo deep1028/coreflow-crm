@@ -112,14 +112,14 @@ newClientBtn.addEventListener('click', function(){
 });
 
 cancelClientBtn.addEventListener('click', function(){
-    // clientForm.reset();
+    clientForm.reset();
     newClientForm.style.display = "none";
 });
 
-saveClientBtn.addEventListener('click', function(event){
+clientForm.addEventListener("submit", function(event){
     event.preventDefault();
 
-    const name = clientNameInput.value.trim();
+    const name = clientNameInput.value.trim().toLowerCase();
     const email = clientEmailInput.value.trim().toLowerCase();
     const phone = clientPhoneInput.value.trim();
     const companyName = clientCompanyNameInput.value.trim();
@@ -192,7 +192,7 @@ function renderClients(clientList){
         return;
     }
 
-    clientList.forEach(function(client, index){
+    clientList.forEach(function(client){
         const tableRow = document.createElement("tr");
 
         const nameCell = document.createElement("td");
@@ -227,7 +227,7 @@ function renderClients(clientList){
 
     deleteBtns.forEach(function(button){
         button.addEventListener('click', async function(){
-            const clientIdtobeDelete = button.dataset.id;
+            const clientIdtoDelete = button.dataset.id;
 
             const confirmed = await showConfirmDialog(
                 "Delete Client?",
@@ -239,11 +239,17 @@ function renderClients(clientList){
             }
 
             clients = clients.filter(function(client){
-                return client.id !== clientIdtobeDelete;
+                return client.id !== clientIdtoDelete;
             });
 
             localStorage.setItem("dataOnBrowser", JSON.stringify(clients));
-            renderClients(clients);
+
+            const searchTerm = clientSearch.value.trim().toLowerCase();
+
+            const filteredClients = clients.filter(function(client){
+                return client.name.toLowerCase().includes(searchTerm);
+            });
+            renderClients(filteredClients);
             showToast("Client deleted successfully!", "success");
         });
     });
