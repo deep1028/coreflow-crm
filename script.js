@@ -174,6 +174,24 @@ saveClientBtn.addEventListener('click', function(event){
 function renderClients(clientList){
     const tableBody = document.getElementById("client-table-body");
     tableBody.innerHTML = "";
+
+    if(clientList.length === 0){
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 5;
+        cell.classList.add("empty-state");
+
+        cell.textContent = clients.length === 0
+            ? "No clients added yet."
+            : "No matching clients found.";
+        
+        row.appendChild(cell);
+        tableBody.appendChild(row);
+
+        return;
+    }
+
     clientList.forEach(function(client, index){
         const tableRow = document.createElement("tr");
 

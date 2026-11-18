@@ -471,3 +471,10 @@ main header p{
 #confirm-accept:hover{
     background-color: #059669;
 }
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #8B93A3;
+    font-size: 14px;
+}
