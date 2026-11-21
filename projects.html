@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - CoreFlow CRM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="projects.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="sidebar-dashboard">
+        <aside>
+            <div class="logo">
+                CoreFlow CRM
+            </div>
+
+            <div class="tabs">
+                <nav>
+                    <ul>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="clients.html">Clients</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="meetings.html">Meetings</a></li>
+                        <li><a href="tasks.html">Tasks</a></li>
+                        <li><a href="staff.html">Staff</a></li>
+                        <li><a href="settings.html">Settings</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <p>Version 0.1</p>
+        </aside>
+
+        <main>
+            <header>
+                <div class="heading">
+                    <h1>Projects</h1>
+                    <h6>Manage and track your agency projects</h6>
+                </div>
+
+                <div class="add-project">
+                    <button type="button" id="new-project-btn"><i class="fa-solid fa-plus"></i> New Project</button>
+                </div>
+            </header>
+
+            <div id="summary-cards">
+                <div id="total-projects">
+                    <h3>Total Projects</h3>
+                    <p>0</p>
+                </div>
+                <div id="in-progress-projects">
+                    <h3>In progress</h3>
+                    <p>0</p>
+                </div>
+                <div id="completed-projects">
+                    <h3>Completed</h3>
+                    <p>0</p>
+                </div>
+            </div>
+
+            <div id="search-section">
+                <input type="text" id="project-search" placeholder="Search projects...">
+                <select name="project-status-filter" id="project-status-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="planning">Planning</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="on-hold">On Hold</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <section class="project-list">
+                <h3>All Projects</h3>
+                <div id="project-list-container">
+                    <div id="project-empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <h3>No projects yet</h3>
+                        <p>Create your first project to get started.</p>
+                    </div>
+                    <div id="project-list"></div>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <section id="add-project-form-container">
+        <form action="" id="add-project-form">
+
+            <header class="project-form-header">
+                <h2>Create New Project</h2>
+                <p>Enter the project details below.</p>
+            </header>
+
+            <label for="project-name">Project Name</label>
+            <input type="text" name="project-name" id="project-name" placeholder="e.g. Business Website" required>
+
+            <label for="client-dropdown">Clients</label>
+            <select name="client-dropdown" id="client-dropdown" required>
+                <option value="" disabled selected>Select a client</option>
+            </select>
+
+            <label for="project-description">Description</label>
+            <textarea name="project-description" id="project-description" maxlength="150" placeholder="Briefly describe the project..."></textarea>
+
+            <label for="project-status">Status</label>
+            <select name="project-status" id="project-status" required>
+                <option value="planning">Planning</option>
+                <option value="in-progress">In Progress</option>
+                <option value="on-hold">On Hold</option>
+                <option value="completed">Completed</option>
+            </select>
+
+            <label for="project-priority">Priority</label>
+            <select name="project-priority" id="project-priority" required>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <label for="project-start-date">Start Date</label>
+            <input type="date" name="project-start-date" id="project-start-date" required>
+
+            <label for="project-deadline">Deadline</label>
+            <input type="date" name="project-deadline" id="project-deadline" required>
+
+            <div class="buttons-for-submit-cancel">
+                <button type="button" id="cancel-btn-project-form">Cancel</button>
+                <button type="submit" id="submit-btn-project-form">Create Project</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

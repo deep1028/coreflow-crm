@@ -2,12 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* color: white;
-    background-color: #0F1117; */
-    /* color: rgb(208, 40, 40); */
 }
 
 body{
+    font-family: 'Inter', sans-serif;
     color: white;
     background-color: #0F1117;
 }
