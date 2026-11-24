@@ -10,8 +10,11 @@ const projectStatusSelect = document.getElementById("project-status");
 const projectPrioritySelect = document.getElementById("project-priority");
 const projectStartDateInput = document.getElementById("project-start-date");
 const projectDeadlineInput = document.getElementById("project-deadline");
+const projectListContainer = document.getElementById("project-list");
+const projectEmptyState = document.getElementById("project-empty-state");
 
 const clients = JSON.parse(localStorage.getItem("dataOnBrowser")) || [];
+const projects = JSON.parse(localStorage.getItem("projectsOnBrowser")) || [];
 
 const len = clients.length;
 if (len == 0) {
@@ -86,13 +89,59 @@ projectForm.addEventListener("submit", function(event){
         deadline: deadline
     };
 
-    const projects = JSON.parse(localStorage.getItem("projectsOnBrowser")) || [];
     projects.push(newProject);
-
     localStorage.setItem("projectsOnBrowser", JSON.stringify(projects));
 
+    renderProjects();
     projectForm.reset();
     projectFormContainer.style.display = "none";
 
     alert("Project created successfully!");
 });
+
+function renderProjects(){
+    projectListContainer.innerHTML = "";
+    projectEmptyState.style.display = projects.length === 0 ? "block" : "none";
+
+    projects.forEach(function(project){
+        const client = clients.find(function(client){
+            return client.id === project.clientId;
+        });
+        const projectCard = document.createElement("div");
+        projectCard.classList.add("project-card");
+
+        const projectNameCard = document.createElement("h3");
+        projectNameCard.textContent = project.projectName;
+
+        const clientInfo = document.createElement("p");
+        clientInfo.textContent = client
+            ? `${client.name} — ${client.companyName}`
+            : "Client not found";
+
+        const description = document.createElement("p");
+        description.textContent = project.description || "No description provided";
+
+        const status = document.createElement("p");
+        status.textContent = `Status: ${project.status}`;
+
+        const priority = document.createElement("p");
+        priority.textContent = `Priority: ${project.priority}`;
+
+        const startDate = document.createElement("p");
+        startDate.textContent = `Start Date: ${project.startDate}`;
+
+        const deadline = document.createElement("p");
+        deadline.textContent = `Deadline: ${project.deadline}`;
+       
+        projectCard.appendChild(projectNameCard);
+        projectCard.appendChild(clientInfo);
+        projectCard.appendChild(description);
+        projectCard.appendChild(status);
+        projectCard.appendChild(priority);
+        projectCard.appendChild(startDate);
+        projectCard.appendChild(deadline);
+
+        projectListContainer.appendChild(projectCard);
+    });
+}
+renderProjects();
