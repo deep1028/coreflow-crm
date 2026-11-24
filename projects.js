@@ -12,14 +12,24 @@ const projectStartDateInput = document.getElementById("project-start-date");
 const projectDeadlineInput = document.getElementById("project-deadline");
 const projectListContainer = document.getElementById("project-list");
 const projectEmptyState = document.getElementById("project-empty-state");
+const projectSearch = document.getElementById("project-search");
+const projectStatusFilter = document.getElementById("project-status-filter");
+const noMatchingProjects = document.getElementById("no-matching-projects");
+const totalProjects = document.querySelector("#total-projects p");
+const inProgressProjects = document.querySelector("#in-progress-projects p");
+const completedProjects = document.querySelector("#completed-projects p");
 
 const clients = JSON.parse(localStorage.getItem("dataOnBrowser")) || [];
 const projects = JSON.parse(localStorage.getItem("projectsOnBrowser")) || [];
 
+updateProjectStats();
+
 const len = clients.length;
 if (len == 0) {
     const opt = document.createElement("option");
-    opt.value = "no-client";
+    opt.value = "";
+    opt.disabled = true;
+    opt.selected = true;
     opt.textContent = "No clients found";
     submitProjectBtn.disabled = true;
     clientDropdown.appendChild(opt);
@@ -49,10 +59,10 @@ projectForm.addEventListener("submit", function(event){
     const projectName = projectNameInput.value.trim();
     const selectedClientId = clientDropdown.value.trim();
     const projectDescription = projectDescriptionInput.value.trim();
-    const projectStatus = projectStatusSelect.value.trim();
-    const projectPriority = projectPrioritySelect.value.trim();
-    const startDate = projectStartDateInput.value.trim();
-    const deadline = projectDeadlineInput.value.trim();
+    const projectStatus = projectStatusSelect.value;
+    const projectPriority = projectPrioritySelect.value;
+    const startDate = projectStartDateInput.value;
+    const deadline = projectDeadlineInput.value;
 
     const clientExists = clients.some(function(client){ 
         return client.id === selectedClientId;
@@ -92,18 +102,31 @@ projectForm.addEventListener("submit", function(event){
     projects.push(newProject);
     localStorage.setItem("projectsOnBrowser", JSON.stringify(projects));
 
-    renderProjects();
+    filterProjects();
+    updateProjectStats();
     projectForm.reset();
     projectFormContainer.style.display = "none";
 
     alert("Project created successfully!");
 });
 
-function renderProjects(){
+function renderProjects(projectsToRender = projects){
     projectListContainer.innerHTML = "";
-    projectEmptyState.style.display = projects.length === 0 ? "block" : "none";
 
-    projects.forEach(function(project){
+    if(projects.length === 0){
+        projectEmptyState.style.display = "block";
+        noMatchingProjects.style.display = "none";
+    }
+    else if(projectsToRender.length === 0){
+        projectEmptyState.style.display = "none";
+        noMatchingProjects.style.display = "block";
+    }
+    else {
+        projectEmptyState.style.display = "none";
+        noMatchingProjects.style.display = "none";
+    }
+
+    projectsToRender.forEach(function(project){
         const client = clients.find(function(client){
             return client.id === project.clientId;
         });
@@ -144,4 +167,42 @@ function renderProjects(){
         projectListContainer.appendChild(projectCard);
     });
 }
-renderProjects();
+
+function filterProjects(){
+    const searchValue = projectSearch.value.toLowerCase().trim();
+    const selectedStatus = projectStatusFilter.value;
+
+    const filteredProjects = projects.filter(function(project){
+        const client = clients.find(function(client){
+            return client.id === project.clientId;
+        });
+
+        const projectName = project.projectName.toLowerCase();
+        const clientName = client ? client.name.toLowerCase() : "";
+
+        const matchesSearch = projectName.includes(searchValue) || clientName.includes(searchValue);
+        const matchesStatus = selectedStatus === "all" || project.status === selectedStatus;
+
+        return matchesSearch && matchesStatus;
+    });
+    renderProjects(filteredProjects);
+}
+
+projectSearch.addEventListener("input", filterProjects);
+projectStatusFilter.addEventListener("change", filterProjects);
+
+function updateProjectStats(){
+    totalProjects.textContent = projects.length;
+
+    const inProgressProjectsCount = projects.filter(function(project){
+        return project.status === "in-progress";
+    }).length;
+    inProgressProjects.textContent = inProgressProjectsCount;
+
+    const completedProjectsCount = projects.filter(function(project){
+        return project.status === "completed";
+    }).length;
+    completedProjects.textContent = completedProjectsCount;
+}
+
+filterProjects();
