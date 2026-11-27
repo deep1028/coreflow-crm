@@ -20,7 +20,7 @@ const inProgressProjects = document.querySelector("#in-progress-projects p");
 const completedProjects = document.querySelector("#completed-projects p");
 
 const clients = JSON.parse(localStorage.getItem("dataOnBrowser")) || [];
-const projects = JSON.parse(localStorage.getItem("projectsOnBrowser")) || [];
+let projects = JSON.parse(localStorage.getItem("projectsOnBrowser")) || [];
 
 updateProjectStats();
 
@@ -69,22 +69,22 @@ projectForm.addEventListener("submit", function(event){
     });
 
     if(!projectName){
-        alert("Please enter a project name.");
+        showToast("Please enter a project name.", "warning");
         return;
     }
 
     if(!selectedClientId || !clientExists){
-        alert("Please select a valid client.");
+        showToast("Please select a valid client.", "warning");
         return;
     }
 
     if(!startDate || !deadline){
-        alert("Please select both project dates.");
+        showToast("Please select both project dates.", "warning");
         return;
     }
 
     if (deadline < startDate){
-        alert("Deadline cannot be earlier than the start date.");
+        showToast("Deadline cannot be earlier than the start date.", "warning");
         return;
     }
 
@@ -102,18 +102,17 @@ projectForm.addEventListener("submit", function(event){
     projects.push(newProject);
     localStorage.setItem("projectsOnBrowser", JSON.stringify(projects));
 
-    filterProjects();
-    updateProjectStats();
+    refreshProjectsPage();
     projectForm.reset();
     projectFormContainer.style.display = "none";
 
-    alert("Project created successfully!");
+    showToast("Project created successfully!", "success");
 });
 
 function renderProjects(projectsToRender = projects){
     projectListContainer.innerHTML = "";
 
-    if(projects.length === 0){
+    if(projectsToRender.length === 0){
         projectEmptyState.style.display = "block";
         noMatchingProjects.style.display = "none";
     }
@@ -155,6 +154,11 @@ function renderProjects(projectsToRender = projects){
 
         const deadline = document.createElement("p");
         deadline.textContent = `Deadline: ${project.deadline}`;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("delete-project-btn");
+        deleteBtn.dataset.projectId = project.id;
+        deleteBtn.textContent = "Delete";
        
         projectCard.appendChild(projectNameCard);
         projectCard.appendChild(clientInfo);
@@ -163,6 +167,7 @@ function renderProjects(projectsToRender = projects){
         projectCard.appendChild(priority);
         projectCard.appendChild(startDate);
         projectCard.appendChild(deadline);
+        projectCard.appendChild(deleteBtn);
 
         projectListContainer.appendChild(projectCard);
     });
@@ -205,4 +210,46 @@ function updateProjectStats(){
     completedProjects.textContent = completedProjectsCount;
 }
 
-filterProjects();
+function refreshProjectsPage(){
+    filterProjects();
+    updateProjectStats();
+}
+
+projectListContainer.addEventListener("click", function(event){
+    const checkDeleteClicked = event.target.closest(".delete-project-btn");
+
+    if(checkDeleteClicked){
+        const projectId = checkDeleteClicked.dataset.projectId;
+        deleteProject(projectId);
+    }
+});
+
+async function deleteProject(projectId){
+    const confirmed = await showConfirmDialog(
+        "Delete Project",
+        "Are you sure you want to delete this project?"
+    );
+
+    if(!confirmed){
+        return;
+    }
+
+    const projectExists = projects.some(function(project){
+        return project.id === projectId;
+    });
+
+    if(!projectExists){
+        showToast("Project not found.", "error");
+        return;
+    }
+
+    projects = projects.filter(function(project){
+        return project.id !== projectId;
+    });
+
+    localStorage.setItem("projectsOnBrowser", JSON.stringify(projects));
+    refreshProjectsPage();
+    showToast("Project deleted successfully!", "success");
+}
+
+refreshProjectsPage();
