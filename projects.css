@@ -147,32 +147,155 @@ main .heading h6{
 
 #project-list {
     display: grid;
-    grid-template-columns: repeat(autofit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
     gap: 20px;
+    align-items: stretch;
 }
 
 .project-card{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
     background-color: #181c24;
     border: 1px solid #343B49;
-    border-radius: 9px;
-    padding: 18px;
-    transition: border-color 0.2s ease;
+    border-radius: 10px;
+    padding: 20px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .project-card:hover{
     border-color: #10B981;
+    transform: translateY(-3px);
 }
 
-.project-card h3 {
+.project-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.project-card-header h3 {
     color: #FFFFFF;
-    font-size: 17px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
 }
 
-.project-card p {
-    color: #9ca3af;
+.project-status{
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #10B981;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.project-status[data-status = "completed"]{
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #10B981;
+}
+
+.project-status[data-status = "in-progress"]{
+    background-color: rgba(59, 130, 246, 0.12);
+    color: #60A5FA;
+}
+
+.project-card-info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.project-client{
+    color: #D1D5DB;
     font-size: 14px;
+    font-weight: 500;
+}
+
+.project-description{
+    color: #9CA3AF;
+    font-size: 13px;
     line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.project-details{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #343B49;
+}
+
+.project-priority{
+    padding: 5px 10px;
+    border-radius: 6px;
+    background-color: rgba(245, 158, 11, 0.12);
+    color: #FBBf24;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.project-priority[data-priority = "high"]{
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #F87171;
+}
+
+.project-priority[data-priority = "medium"]{
+    background-color: rgba(245, 158, 11, 0.12);
+    color: #FBBf24;
+}
+
+.project-priority[data-priority = "low"]{
+    background-color: rgba(16, 185, 129, 0.12);
+    color: #10B981;
+}
+
+.project-date{
+    width: 100%;
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+.project-card-actions{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #343B49;
+}
+
+.project-card-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-project-btn{
+    background-color: #343B49;
+    color: #FFFFFF;
+}
+
+.edit-project-btn:hover{
+    background-color: #4B5563;
+}
+
+.delete-project-btn{
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #F87171;
+}
+
+.delete-project-btn:hover{
+    background-color: rgba(239, 68, 68, 0.22);
 }
 
 #add-project-form-container{
@@ -216,7 +339,7 @@ main .heading h6{
     margin-top: 7px;
 }
 
-#add-project-from label {
+#add-project-form label {
     color: #D1D5DB;
     font-size: 14px;
     font-weight: 500;
@@ -228,7 +351,7 @@ main .heading h6{
     width: 100%;
     padding: 11px 12px;
     border: 1px solid #343B49;
-    border: 7px;
+    border-radius: 7px;
     background-color: #232936;
     color: #FFFFFF;
     font-family: inherit;
@@ -325,5 +448,13 @@ main .heading h6{
 
     #add-project-form {
         padding: 20px;
+    }
+
+    #project-list{
+        grid-template-columns: 1fr;
+    }
+
+    .project-card{
+        padding: 16px;
     }
 }

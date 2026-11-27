@@ -50,6 +50,7 @@ newProjectBtn.addEventListener("click", function() {
     projectForm.reset();
     editingProjectId = null;
     submitProjectBtn.textContent = "Create Project";
+    headerFormChange.textContent = "Create the Project";
     projectFormContainer.style.display = "flex";
 });
 
@@ -169,23 +170,31 @@ function renderProjects(projectsToRender = projects){
         projectNameCard.textContent = project.projectName;
 
         const clientInfo = document.createElement("p");
+        clientInfo.classList.add("project-client");
         clientInfo.textContent = client
             ? `${client.name} — ${client.companyName}`
             : "Client not found";
 
         const description = document.createElement("p");
+        description.classList.add("project-description");
         description.textContent = project.description || "No description provided";
 
         const status = document.createElement("p");
-        status.textContent = `Status: ${project.status}`;
+        status.classList.add("project-status");
+        status.dataset.status = project.status;
+        status.textContent = project.status.replaceAll("-", " ");
 
         const priority = document.createElement("p");
-        priority.textContent = `Priority: ${project.priority}`;
+        priority.classList.add("project-priority");
+        priority.dataset.priority = project.priority.toLowerCase();
+        priority.textContent = project.priority;
 
         const startDate = document.createElement("p");
+        startDate.classList.add("project-date");
         startDate.textContent = `Start Date: ${project.startDate}`;
 
         const deadline = document.createElement("p");
+        deadline.classList.add("project-date");
         deadline.textContent = `Deadline: ${project.deadline}`;
 
         const deleteBtn = document.createElement("button");
@@ -197,16 +206,36 @@ function renderProjects(projectsToRender = projects){
         editBtn.classList.add("edit-project-btn");
         editBtn.dataset.projectId = project.id;
         editBtn.textContent = "Edit";
-       
-        projectCard.appendChild(projectNameCard);
-        projectCard.appendChild(clientInfo);
-        projectCard.appendChild(description);
-        projectCard.appendChild(status);
-        projectCard.appendChild(priority);
-        projectCard.appendChild(startDate);
-        projectCard.appendChild(deadline);
-        projectCard.appendChild(deleteBtn);
-        projectCard.appendChild(editBtn);
+
+        const cardHeader = document.createElement("div");
+        cardHeader.classList.add("project-card-header");
+
+        cardHeader.appendChild(projectNameCard);
+        cardHeader.appendChild(status);
+        
+        const cardInfo = document.createElement("div");
+        cardInfo.classList.add("project-card-info");
+
+        cardInfo.appendChild(clientInfo);
+        cardInfo.appendChild(description);
+
+        const cardDetails = document.createElement("div");
+        cardDetails.classList.add("project-card-details");
+
+        cardDetails.appendChild(priority);
+        cardDetails.appendChild(startDate);
+        cardDetails.appendChild(deadline);
+
+        cardActions = document.createElement("div");
+        cardActions.classList.add("project-card-actions");
+
+        cardActions.appendChild(editBtn);
+        cardActions.appendChild(deleteBtn);
+
+        projectCard.appendChild(cardHeader);
+        projectCard.appendChild(cardInfo);
+        projectCard.appendChild(cardDetails);
+        projectCard.appendChild(cardActions);
 
         projectListContainer.appendChild(projectCard);
     });
